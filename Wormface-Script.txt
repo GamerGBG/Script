@@ -1,0 +1,46 @@
+local items = game:GetService("Workspace").Items
+local hum = game.Players.LocalPlayer.Character.HumanoidRootPart
+local tweenserv = game:GetService('TweenService')
+local doit = true
+
+local function getGem()
+    for _, v in ipairs(items:GetChildren()) do
+        if not v or not v:FindFirstChild('Part') then
+            return nil
+        end
+        if v.Part.Position.X < 325 then
+            return v.Part
+        end
+    end
+    return nil
+end
+
+local function gotoGem()
+    local gem = getGem()
+    if gem then
+        local goal = {}
+        goal.CFrame = gem.CFrame
+        local tweenInfo = TweenInfo.new(0)
+        local tween = tweenserv:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, goal)
+        tween:Play()
+        wait(0.001)
+        if gem.Parent then
+            gem.Parent:Destroy()
+        end
+    end
+end
+
+local function checkResetCharacter()
+    -- Check if the character is in a state that requires resetting
+    local character = game.Players.LocalPlayer.Character
+    if not character or not character.Parent then
+        game.Players.LocalPlayer:LoadCharacter()
+    end
+end
+
+while true do
+    if(game.Players.LocalPlayer.Character.HumanoidRootPart.StarterWorm.Head:FindFirstChild("FaceCenterAttachment")) then game.Players.LocalPlayer.Character.HumanoidRootPart.StarterWorm.Head:FindFirstChild("FaceCenterAttachment"):Destroy() end
+    checkResetCharacter()
+    gotoGem()
+    wait()
+end
