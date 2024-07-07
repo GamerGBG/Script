@@ -8,7 +8,7 @@ end
 
 local ui = Instance.new("ScreenGui")
 ui.Name = randomName()
-ui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ui.Parent = game:GetService("CoreGui")
 
 local library = {}
 
@@ -159,9 +159,9 @@ function library:CreateTab(name, rainbow, color)
 				tween:Play()
 				tween.Completed:Connect(function()
 					for i,v in pairs(holder3:GetChildren())do
-						v.ZIndex=1
-						debounce = false
-					end
+					v.ZIndex=1
+					debounce = false
+				end
 				end)
 			end
 		end
