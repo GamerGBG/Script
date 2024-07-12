@@ -377,7 +377,7 @@ function library:CreateButton(window, text, func)
 	Button.MouseButton1Down:Connect(func)
 
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 15) -- Adjust the number for more/less roundness
+    corner.CornerRadius = UDim.new(0, 7) -- Adjust the number for more/less roundness
     corner.Parent = Button
 	
 	return Button
