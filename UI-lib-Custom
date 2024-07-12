@@ -1,18 +1,5 @@
--- BaconLib v1.2 by H3x0R
-_BLVersion = "1.2"
-_BLChangelog = [[
-    v1.1:
-        Added keybinds, sliders, and you have asked, so you got dropdowns too!
-        Made custom smooth drag because Roblox's sucks.
-        Made the gui delete on re-execution.
-        Fixed a bug where Container.Size.Y.Offset would increase if close is used too fast.
-        Revised code.
-        [PRERELEASE-BUGFIX]: Fixed where the slider wouldn't give the correct value.
-        [PRERELEASE-BUGFIX]: Fixed where the slider would be off when you move the ui and change.
-    v1.2:
-        Added callbacks for textboxes.
-        Bugfixes.
-]]
+Version = "1"
+Changelog = [[ ]]
 
 repeat game:GetService("RunService").RenderStepped:Wait() until game:IsLoaded() == true
 
@@ -55,7 +42,7 @@ function library:CreateWindow(name, keyCode)
 	TopBar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 	TopBar.BorderSizePixel = 0
 	TopBar.Position = UDim2.new(0.489757448, 0, 0.489311516, 0)
-	TopBar.Size = UDim2.new(0, 200, 0, 30)
+	TopBar.Size = UDim2.new(0, 240, 0, 30)
 	TopBar.ZIndex = 0
 	
 	local UserInputService = game:GetService("UserInputService")
@@ -180,6 +167,7 @@ function library:CreateWindow(name, keyCode)
 					tween:Play()
 					SizeToggle.Text = "+"
 					open = false
+                    SizeToggle.BorderColor3 = Color3.fromRGB(10, 10, 10)
 				else
 					tween = TweenService:Create(Container, tweenInfo, {Size = Container.Size + UDim2.new(0, 0, 0, savedOffset)})
 					tween:Play()
@@ -373,6 +361,10 @@ function library:CreateButton(window, text, func)
 	Button.TextWrapped = true
 	increase(window)
 	Button.MouseButton1Down:Connect(func)
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 15) -- Adjust the number for more/less roundness
+    corner.Parent = Button
 	
 	return Button
 end
@@ -765,7 +757,7 @@ function library:CreateDropdown(window, name)
 	kek_dropdown_lol.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	kek_dropdown_lol.BorderSizePixel = 0
 	kek_dropdown_lol.Position = UDim2.new(-0.00416666688, 0, 0.0811688304, 0)
-	kek_dropdown_lol.Size = UDim2.new(0, 200, 0, 30)
+	kek_dropdown_lol.Size = UDim2.new(0, 240, 0, 30)
 	
 	table.insert(dropdownSizes, #dropdownSizes + 1, DropFrame.Size)
 	DropFrame.LayoutOrder = 1
@@ -871,7 +863,7 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	DR_FRAME.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
 	DR_FRAME.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	DR_FRAME.BorderSizePixel = 0
-	DR_FRAME.Size = UDim2.new(0, 200, 0, 30)
+	DR_FRAME.Size = UDim2.new(0, 240, 0, 30)
 	
 	local Button = Instance.new("TextButton")
 	Button.Name = "Button"
@@ -880,7 +872,7 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	Button.BackgroundTransparency = 1.000
 	Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Button.BorderSizePixel = 0
-	Button.Size = UDim2.new(0, 200, 0, 30)
+	Button.Size = UDim2.new(0, 240, 0, 30)
 	Button.Text = name
 	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Button.TextSize = 14.000
@@ -894,7 +886,7 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	if dropdownSizes[tonumber(num)] then
 		table.insert(dropdownSizes, tonumber(num), UDim2.new(0, 240, 0, dropdownSizes[tonumber(num)].Y.Offset + 30))
 	else
-		table.insert(dropdownSizes, tonumber(num), UDim2.new(0, 200, 0, 30))
+		table.insert(dropdownSizes, tonumber(num), UDim2.new(0, 240, 0, 30))
 	end
 	
 	return Button
@@ -915,7 +907,7 @@ function library:GetTopBar(window)
 end
 
 function library:GetInfo()
-    return _BLVersion, _BLChangelog
+    return Version, Changelog
 end
 
 return library
