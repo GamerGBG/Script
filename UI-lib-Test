@@ -1,4 +1,5 @@
-_BLVersion = "1.3"
+-- BaconLib v1.2 by H3x0R
+_BLVersion = "1.2"
 _BLChangelog = [[
     v1.1:
         Added keybinds, sliders, and you have asked, so you got dropdowns too!
@@ -11,8 +12,6 @@ _BLChangelog = [[
     v1.2:
         Added callbacks for textboxes.
         Bugfixes.
-    v1.3:
-        
 ]]
 
 repeat game:GetService("RunService").RenderStepped:Wait() until game:IsLoaded() == true
@@ -56,7 +55,7 @@ function library:CreateWindow(name, keyCode)
 	TopBar.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 	TopBar.BorderSizePixel = 0
 	TopBar.Position = UDim2.new(0.489757448, 0, 0.489311516, 0)
-	TopBar.Size = UDim2.new(0, 240, 0, 30)
+	TopBar.Size = UDim2.new(0, 200, 0, 30)
 	TopBar.ZIndex = 0
 	
 	local UserInputService = game:GetService("UserInputService")
@@ -181,7 +180,6 @@ function library:CreateWindow(name, keyCode)
 					tween:Play()
 					SizeToggle.Text = "+"
 					open = false
-                    SizeToggle.BorderColor3 = Color3.fromRGB(10, 10, 10)
 				else
 					tween = TweenService:Create(Container, tweenInfo, {Size = Container.Size + UDim2.new(0, 0, 0, savedOffset)})
 					tween:Play()
@@ -375,10 +373,6 @@ function library:CreateButton(window, text, func)
 	Button.TextWrapped = true
 	increase(window)
 	Button.MouseButton1Down:Connect(func)
-
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 7) -- Adjust the number for more/less roundness
-    corner.Parent = Button
 	
 	return Button
 end
