@@ -114,9 +114,9 @@ function library:CreateWindow(name, keyCode)
 	TopLabel.Name = "TopLabel"
 	TopLabel.Parent = TopBar
 	TopLabel.Active = true
-	TopLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	TopLabel.BackgroundColor3 = 
 	TopLabel.BackgroundTransparency = 1.000
-	TopLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TopLabel.BorderColor3 = 
 	TopLabel.BorderSizePixel = 2
 	TopLabel.Position = UDim2.new(0.0291666668, 0, -0.00833333377, 0)
 	TopLabel.Selectable = true
@@ -131,9 +131,9 @@ function library:CreateWindow(name, keyCode)
 	
 	SizeToggle.Name = "SizeToggle"
 	SizeToggle.Parent = TopBar
-	SizeToggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	SizeToggle.BackgroundColor3 = 
 	SizeToggle.BackgroundTransparency = 1.000
-	SizeToggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	SizeToggle.BorderColor3 = 
 	SizeToggle.BorderSizePixel = 2
 	SizeToggle.Position = UDim2.new(0.872619033, 0, -0.00833332539, 0)
 	SizeToggle.Size = UDim2.new(0, 30, 0, 30)
@@ -205,9 +205,9 @@ function library:CreateNotification(title, txt)
 	a_notif_owo.Name = "a_notif_owo"
 	a_notif_owo.Parent = ScreenGui
 	a_notif_owo.Active = true
-	a_notif_owo.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	a_notif_owo.BackgroundColor3 = 
 	a_notif_owo.BackgroundTransparency = 0.900
-	a_notif_owo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	a_notif_owo.BorderColor3 = 
 	a_notif_owo.BorderSizePixel = 2
 	a_notif_owo.Size = UDim2.new(0, 278, 0, 146)
 	
@@ -303,18 +303,18 @@ function library:CreateLabel(window, text)
 	omg_its_a_label.LayoutOrder = 1
 	omg_its_a_label.Name = "omg_its_a_label"
 	omg_its_a_label.Parent = window.TopBar.Container
-	omg_its_a_label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	omg_its_a_label.BackgroundColor3 = 
 	omg_its_a_label.BackgroundTransparency = 1.000
-	omg_its_a_label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	omg_its_a_label.BorderColor3 = 
 	omg_its_a_label.BorderSizePixel = 2
 	omg_its_a_label.Size = UDim2.new(0, 240, 0, 40)
 	
 	Label.Name = "Label"
 	Label.Parent = omg_its_a_label
 	Label.Active = true
-	Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BackgroundColor3 = 
 	Label.BackgroundTransparency = 1.000
-	Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BorderColor3 = 
 	Label.BorderSizePixel = 2
 	Label.Position = UDim2.new(0.0291666668, 0, 0.125, 0)
 	Label.Selectable = true
@@ -341,16 +341,16 @@ function library:CreateButton(window, text, func)
 	xd_button_yey.LayoutOrder = 1
 	xd_button_yey.Name = "xd_button_yey"
 	xd_button_yey.Parent = window.TopBar.Container
-	xd_button_yey.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	xd_button_yey.BackgroundColor3 = 
 	xd_button_yey.BackgroundTransparency = 1.000
-	xd_button_yey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	xd_button_yey.BorderColor3 = 
 	xd_button_yey.BorderSizePixel = 2
 	xd_button_yey.Size = UDim2.new(0, 240, 0, 40)
 	
 	Button.Name = "Button"
 	Button.Parent = xd_button_yey
 	Button.BackgroundColor3 = Color3.fromRGB(41, 41, 41)
-	Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Button.BorderColor3 = 
 	Button.BorderSizePixel = 2
 	Button.Position = UDim2.new(0.0291666668, 0, 0.125, 0)
 	Button.Size = UDim2.new(0, 227, 0, 30)
@@ -377,16 +377,16 @@ function library:CreateTextBox(window, font, placeholderText, text, callback)
 	o_no_its_a_textbox.LayoutOrder = 1
 	o_no_its_a_textbox.Name = "o_no_its_a_textbox"
 	o_no_its_a_textbox.Parent = window.TopBar.Container
-	o_no_its_a_textbox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	o_no_its_a_textbox.BackgroundColor3 = 
 	o_no_its_a_textbox.BackgroundTransparency = 1.000
-	o_no_its_a_textbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	o_no_its_a_textbox.BorderColor3 = 
 	o_no_its_a_textbox.BorderSizePixel = 2
 	o_no_its_a_textbox.Size = UDim2.new(0, 240, 0, 40)
 	
 	_TextBox.Name = "TextBox"
 	_TextBox.Parent = o_no_its_a_textbox
 	_TextBox.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
-	_TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	_TextBox.BorderColor3 = 
 	_TextBox.BorderSizePixel = 2
 	_TextBox.Position = UDim2.new(0.0291666668, 0, 0.125, 0)
 	_TextBox.Size = UDim2.new(0, 227, 0, 30)
@@ -425,24 +425,24 @@ function library:CreateToggle(window, text, currentState, func)
 	wow_a_toggle_owo.LayoutOrder = 1
 	wow_a_toggle_owo.Name = "wow_a_toggle_owo"
 	wow_a_toggle_owo.Parent = window.TopBar.Container
-	wow_a_toggle_owo.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	wow_a_toggle_owo.BackgroundColor3 = 
 	wow_a_toggle_owo.BackgroundTransparency = 1.000
-	wow_a_toggle_owo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	wow_a_toggle_owo.BorderColor3 = 
 	wow_a_toggle_owo.BorderSizePixel = 2
 	wow_a_toggle_owo.Size = UDim2.new(0, 240, 0, 40)
 	
 	ToggleBtn.Name = "ToggleBtn"
 	ToggleBtn.Parent = wow_a_toggle_owo
 	ToggleBtn.Active = false
-	ToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	ToggleBtn.BackgroundColor3 = 
 	ToggleBtn.BackgroundTransparency = 1.000
-	ToggleBtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ToggleBtn.BorderColor3 = 
 	ToggleBtn.BorderSizePixel = 2
 	ToggleBtn.Position = UDim2.new(0.850000024, 0, 0, 5)
 	ToggleBtn.Selectable = false
 	ToggleBtn.Size = UDim2.new(0, 30, 0, 30)
 	ToggleBtn.Text = ""
-	ToggleBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+	ToggleBtn.TextColor3 = 
 	ToggleBtn.TextSize = 1.000
 	ToggleBtn.TextTransparency = 1.000
 	ToggleBtn.TextWrapped = true
@@ -468,9 +468,9 @@ function library:CreateToggle(window, text, currentState, func)
 	ToggleLabel.Name = "ToggleLabel"
 	ToggleLabel.Parent = wow_a_toggle_owo
 	ToggleLabel.Active = true
-	ToggleLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	ToggleLabel.BackgroundColor3 = 
 	ToggleLabel.BackgroundTransparency = 1.000
-	ToggleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ToggleLabel.BorderColor3 = 
 	ToggleLabel.BorderSizePixel = 2
 	ToggleLabel.Position = UDim2.new(0.0291666668, 0, 0.125, 0)
 	ToggleLabel.Selectable = true
@@ -520,9 +520,9 @@ function library:CreateSlider(window, name, min, max, current, callback)
 	woah_a_slider.LayoutOrder = 1
 	woah_a_slider.Name = "woah_a_slider"
 	woah_a_slider.Parent = window.TopBar.Container
-	woah_a_slider.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	woah_a_slider.BackgroundColor3 = 
 	woah_a_slider.BackgroundTransparency = 1.000
-	woah_a_slider.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	woah_a_slider.BorderColor3 = 
 	woah_a_slider.BorderSizePixel = 2
 	woah_a_slider.Size = UDim2.new(0, 240, 0, 56)
 	
@@ -530,7 +530,7 @@ function library:CreateSlider(window, name, min, max, current, callback)
 	Bar.Parent = woah_a_slider
 	Bar.AnchorPoint = Vector2.new(0.5, 0.5)
 	Bar.BackgroundColor3 = Color3.fromRGB(41, 41, 41)
-	Bar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Bar.BorderColor3 = 
 	Bar.BorderSizePixel = 2
 	Bar.ClipsDescendants = true
 	Bar.Position = UDim2.new(0, 120, 0, 34)
@@ -538,22 +538,22 @@ function library:CreateSlider(window, name, min, max, current, callback)
 	Bar.AutoButtonColor = false
 	Bar.Font = Enum.Font.SourceSans
 	Bar.Text = ""
-	Bar.TextColor3 = Color3.fromRGB(0, 0, 0)
+	Bar.TextColor3 = 
 	Bar.TextSize = 14.000
 	
 	Current.Name = "Current"
 	Current.Parent = Bar
 	Current.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
-	Current.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Current.BorderColor3 = 
 	Current.BorderSizePixel = 2
 	Current.Size = UDim2.new(0.5, 0, 1, 0)
 	
 	Value.Name = "Value"
 	Value.Parent = Bar
 	Value.Active = true
-	Value.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Value.BackgroundColor3 = 
 	Value.BackgroundTransparency = 1.000
-	Value.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Value.BorderColor3 = 
 	Value.BorderSizePixel = 2
 	Value.Position = UDim2.new(-0.00183696998, 0, -0.0833333358, 2)
 	Value.Size = UDim2.new(0, 227, 0, 24)
@@ -567,9 +567,9 @@ function library:CreateSlider(window, name, min, max, current, callback)
 	Label.Name = "Label"
 	Label.Parent = woah_a_slider
 	Label.Active = true
-	Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BackgroundColor3 = 
 	Label.BackgroundTransparency = 1.000
-	Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BorderColor3 = 
 	Label.BorderSizePixel = 2
 	Label.Position = UDim2.new(0.0289999992, 0, 0, 2)
 	Label.Selectable = true
@@ -664,16 +664,16 @@ function library:CreateKeyBind(window, name, key, callback)
 	yes_a_keybind.LayoutOrder = 1
 	yes_a_keybind.Name = "yes_a_keybind"
 	yes_a_keybind.Parent = window.TopBar.Container
-	yes_a_keybind.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	yes_a_keybind.BackgroundColor3 = 
 	yes_a_keybind.BackgroundTransparency = 1.000
-	yes_a_keybind.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	yes_a_keybind.BorderColor3 = 
 	yes_a_keybind.BorderSizePixel = 2
 	yes_a_keybind.Size = UDim2.new(0, 240, 0, 43)
 	
 	Bind.Name = "Bind"
 	Bind.Parent = yes_a_keybind
 	Bind.BackgroundColor3 = Color3.fromRGB(41, 41, 41)
-	Bind.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Bind.BorderColor3 = 
 	Bind.BorderSizePixel = 2
 	Bind.Position = UDim2.new(0.725000024, 0, 0.125, 0)
 	Bind.Size = UDim2.new(0, 60, 0, 30)
@@ -686,9 +686,9 @@ function library:CreateKeyBind(window, name, key, callback)
 	Label.Name = "Label"
 	Label.Parent = yes_a_keybind
 	Label.Active = true
-	Label.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BackgroundColor3 = 
 	Label.BackgroundTransparency = 1.000
-	Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Label.BorderColor3 = 
 	Label.BorderSizePixel = 2
 	Label.Position = UDim2.new(0.0291666668, 0, 0.125, 0)
 	Label.Selectable = true
@@ -749,7 +749,7 @@ function library:CreateDropdown(window, name)
 	kek_dropdown_lol.Parent = window.TopBar.Container
 	kek_dropdown_lol.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
 	kek_dropdown_lol.BackgroundTransparency = 0.500
-	kek_dropdown_lol.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	kek_dropdown_lol.BorderColor3 = 
 	kek_dropdown_lol.BorderSizePixel = 2
 	kek_dropdown_lol.Position = UDim2.new(-0.00416666688, 0, 0.0811688304, 0)
 	kek_dropdown_lol.Size = UDim2.new(0, 240, 0, 30)
@@ -759,7 +759,7 @@ function library:CreateDropdown(window, name)
 	DropFrame.Name = #dropdownSizes -- iteration free lol
 	DropFrame.Parent = window.TopBar.Container
 	DropFrame.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
-	DropFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	DropFrame.BorderColor3 = 
 	DropFrame.BorderSizePixel = 2
 	DropFrame.ClipsDescendants = true
 	DropFrame.Position = UDim2.new(0, 0, 1, 0)
@@ -770,9 +770,9 @@ function library:CreateDropdown(window, name)
 	
 	SizeToggle.Name = #dropdownSizes
 	SizeToggle.Parent = kek_dropdown_lol
-	SizeToggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	SizeToggle.BackgroundColor3 = 
 	SizeToggle.BackgroundTransparency = 1.000
-	SizeToggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	SizeToggle.BorderColor3 = 
 	SizeToggle.BorderSizePixel = 2
 	SizeToggle.Position = UDim2.new(0.872619033, 0, -0.00833332539, 0)
 	SizeToggle.Size = UDim2.new(0, 30, 0, 30)
@@ -787,9 +787,9 @@ function library:CreateDropdown(window, name)
 	TopLabel.Name = "TopLabel"
 	TopLabel.Parent = kek_dropdown_lol
 	TopLabel.Active = true
-	TopLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	TopLabel.BackgroundColor3 = 
 	TopLabel.BackgroundTransparency = 1.000
-	TopLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TopLabel.BorderColor3 = 
 	TopLabel.BorderSizePixel = 2
 	TopLabel.Position = UDim2.new(0.0291666668, 0, 0.100000001, 0)
 	TopLabel.Selectable = true
@@ -856,16 +856,16 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	DR_FRAME.Name = "DR_FRAME"
 	DR_FRAME.Parent = window.TopBar.Container[num] -- hacky method but will do
 	DR_FRAME.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
-	DR_FRAME.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	DR_FRAME.BorderColor3 = 
 	DR_FRAME.BorderSizePixel = 2
 	DR_FRAME.Size = UDim2.new(0, 240, 0, 30)
 	
 	local Button = Instance.new("TextButton")
 	Button.Name = "Button"
 	Button.Parent = DR_FRAME
-	Button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Button.BackgroundColor3 = 
 	Button.BackgroundTransparency = 1.000
-	Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Button.BorderColor3 = 
 	Button.BorderSizePixel = 2
 	Button.Size = UDim2.new(0, 240, 0, 30)
 	Button.Text = name
