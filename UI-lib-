@@ -765,7 +765,7 @@ function library:CreateDropdown(window, name)
 	kek_dropdown_lol.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	kek_dropdown_lol.BorderSizePixel = 0
 	kek_dropdown_lol.Position = UDim2.new(-0.00416666688, 0, 0.0811688304, 0)
-	kek_dropdown_lol.Size = UDim2.new(0, 240, 0, 30)
+	kek_dropdown_lol.Size = UDim2.new(0, 200, 0, 30)
 	
 	table.insert(dropdownSizes, #dropdownSizes + 1, DropFrame.Size)
 	DropFrame.LayoutOrder = 1
@@ -871,7 +871,7 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	DR_FRAME.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
 	DR_FRAME.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	DR_FRAME.BorderSizePixel = 0
-	DR_FRAME.Size = UDim2.new(0, 240, 0, 30)
+	DR_FRAME.Size = UDim2.new(0, 200, 0, 30)
 	
 	local Button = Instance.new("TextButton")
 	Button.Name = "Button"
@@ -880,7 +880,7 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	Button.BackgroundTransparency = 1.000
 	Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Button.BorderSizePixel = 0
-	Button.Size = UDim2.new(0, 240, 0, 30)
+	Button.Size = UDim2.new(0, 200, 0, 30)
 	Button.Text = name
 	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 	Button.TextSize = 14.000
@@ -894,7 +894,7 @@ function library:NewDropdownButton(window, dropdown, name, action)
 	if dropdownSizes[tonumber(num)] then
 		table.insert(dropdownSizes, tonumber(num), UDim2.new(0, 240, 0, dropdownSizes[tonumber(num)].Y.Offset + 30))
 	else
-		table.insert(dropdownSizes, tonumber(num), UDim2.new(0, 240, 0, 30))
+		table.insert(dropdownSizes, tonumber(num), UDim2.new(0, 200, 0, 30))
 	end
 	
 	return Button
