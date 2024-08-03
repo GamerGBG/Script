@@ -968,4 +968,44 @@ function library:Window(name)
 	return functions
 end
 
+
+local main = library:Window("main")
+-- Name of button, callback
+
+main:Button("Button name", function()
+   print("pressed button")
+end)
+
+-- Name of the toggle, default state of the toggle, callback
+
+main:Toggle("Example toggle", true, function(bool)
+    print(bool) -- bool is true or false depending on the state of the toggle
+end)
+
+-- Name of slider, minimum value, maximum value, default value, callback
+
+main:Slider("Example Slider",0,100,20, function(value)
+   print(value)
+end)
+
+-- Text, color: setting color to true will give it a rainbow effect!
+
+main:Label("Press X To Hide", true)
+
+-- Name, callback
+
+main:Box("Walkspeed", function(text, focuslost)
+   if focuslost then
+   print(text)
+   end
+end)
+
+local Speed = library:Window("Speed")
+
+Speed:Button("Speed 100", function()
+   
+end)
+
+library:Keybind("X")
+
 return library
