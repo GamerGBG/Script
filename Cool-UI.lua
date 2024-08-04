@@ -992,6 +992,70 @@ Main:Slider("FOV Slider", 70, 120, 70, function(value)
 	camera.FieldOfView = value
 end)
 
+Main:Button("Inf Jump", function()
+	game:GetService('UserInputService').InputBegan:Connect(function(UserInput) local Player = game:GetService('Players').LocalPlayer; _G.JumpHeight = humanoid.JumpPower; local UIS = game:GetService('UserInputService'); local function Action(Object, Function) if Object ~= nil then Function(Object) end end; if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then Action(Player.Character.Humanoid, function(self) if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then Action(self.Parent.HumanoidRootPart, function(rootPart) rootPart.Velocity = Vector3.new(0, _G.JumpHeight, 0) end) end end) end end)
+end)
+
+-- Flight toggle button
+Main:Toggle("Flight", false, function()
+	toggleFlightMode()
+end)
+
+local SettingsSword = library:Window("Settings")
+
+SettingsSword:Label("Made By GamerGBG")
+SettingsSword:Label("Press X To Hide")
+SettingsSword:Button("Destroy Gui", function()
+    library:Destroy()
+end)
+
+SettingsSword:Button("Join our Discord", function()
+	-- Create a ScreenGui and TextBox in the Player's PlayerGui
+	local player = game.Players.LocalPlayer
+	local screenGui = Instance.new("ScreenGui")
+	screenGui.Name = "DiscordGui"
+	screenGui.Parent = player.PlayerGui
+
+	local text = Instance.new("TextLabel")
+	text.Size = UDim2.new(0.7, 0, 0.1, 0)
+	text.Position = UDim2.new(0.1, 0, 0.4, -135)
+	text.Text = "Please Open the URL"
+	text.TextColor3 = Color3.fromRGB(255, 255, 255)
+	text.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Red color for visibility
+	text.TextScaled = true
+	text.Parent = screenGui
+
+	local textBox = Instance.new("TextBox")
+	textBox.Size = UDim2.new(0.7, 0, 0.1, 0)
+	textBox.Position = UDim2.new(0.1, 0, 0.4, 0)
+	textBox.Text = "https://discord.gg/xP3Z4rSfxv"
+	textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	textBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	textBox.TextScaled = true
+	textBox.TextWrapped = true
+	textBox.TextEditable = false  -- Prevent editing
+	textBox.ClearTextOnFocus = false  -- Prevent clearing text when focused
+	textBox.Parent = screenGui
+
+	local closeButton = Instance.new("TextButton")
+	closeButton.Size = UDim2.new(0.2, 0, 0.2, 0)
+	closeButton.Position = UDim2.new(0.8, 0, 0.3, 0)
+	closeButton.Text = "Close"
+	closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	closeButton.BackgroundColor3 = Color3.fromRGB(1, 0, 0)  -- Red color for visibility
+	closeButton.TextScaled = true
+	closeButton.Parent = screenGui
+
+	-- Function to remove the ScreenGui
+	local function onCloseButtonClicked()
+		screenGui:Destroy()  -- This will remove the GUI from the player's screen
+	end
+
+	-- Connect the function to the button's click event
+	closeButton.MouseButton1Click:Connect(onCloseButtonClicked)
+end)
+
+library:Keybind("X")
 
 -- Global configuration
 getgenv().Config = {
@@ -1003,8 +1067,8 @@ getgenv().Config = {
     R6 = true,
     STOP_FORCE = 50,
     MOVE_FORCE = 50,
-    TURN_FORCE = 500,
-    MAX_SPEED = 500
+    TURN_FORCE = 100,
+    MAX_SPEED = 100
 }
 
 -- Flight Mechanics
@@ -1124,74 +1188,7 @@ do
             end
         end
     end
-
-    UIS.InputBegan:Connect(function(Input)
-        if Input.KeyCode == Enum.KeyCode[getgenv().Config.KEY_CONTROL.TOGGLE_FLY] then
-            toggleFlightMode()
-        end
-    end)
-
     getgenv().FLY_LOADED = true
 end
 
--- Flight toggle button
-Main:Toggle("Flight", false, function()
-	toggleFlightMode()
-end)
-
-local SettingsSword = library:Window("Settings")
-
-SettingsSword:Label("Made By GamerGBG")
-SettingsSword:Label("Press X To Hide")
-SettingsSword:Button("Destroy Gui", function()
-    library:Destroy()
-end)
-
-SettingsSword:Button("Join our Discord", function()
-	-- Create a ScreenGui and TextBox in the Player's PlayerGui
-	local player = game.Players.LocalPlayer
-	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "DiscordGui"
-	screenGui.Parent = player.PlayerGui
-
-	local text = Instance.new("TextLabel")
-	text.Size = UDim2.new(0.7, 0, 0.1, 0)
-	text.Position = UDim2.new(0.1, 0, 0.4, -135)
-	text.Text = "Please Open the URL"
-	text.TextColor3 = Color3.fromRGB(255, 255, 255)
-	text.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Red color for visibility
-	text.TextScaled = true
-	text.Parent = screenGui
-
-	local textBox = Instance.new("TextBox")
-	textBox.Size = UDim2.new(0.7, 0, 0.1, 0)
-	textBox.Position = UDim2.new(0.1, 0, 0.4, 0)
-	textBox.Text = "https://discord.gg/xP3Z4rSfxv"
-	textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-	textBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-	textBox.TextScaled = true
-	textBox.TextWrapped = true
-	textBox.TextEditable = false  -- Prevent editing
-	textBox.ClearTextOnFocus = false  -- Prevent clearing text when focused
-	textBox.Parent = screenGui
-
-	local closeButton = Instance.new("TextButton")
-	closeButton.Size = UDim2.new(0.2, 0, 0.2, 0)
-	closeButton.Position = UDim2.new(0.8, 0, 0.3, 0)
-	closeButton.Text = "Close"
-	closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-	closeButton.BackgroundColor3 = Color3.fromRGB(1, 0, 0)  -- Red color for visibility
-	closeButton.TextScaled = true
-	closeButton.Parent = screenGui
-
-	-- Function to remove the ScreenGui
-	local function onCloseButtonClicked()
-		screenGui:Destroy()  -- This will remove the GUI from the player's screen
-	end
-
-	-- Connect the function to the button's click event
-	closeButton.MouseButton1Click:Connect(onCloseButtonClicked)
-end)
-
-library:Keybind("X")
 return library
