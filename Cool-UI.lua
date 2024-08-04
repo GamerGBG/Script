@@ -976,7 +976,7 @@ local humanoid = character:WaitForChild("Humanoid")
 local camera = workspace.CurrentCamera
 
 
-local Main = library:Window("Main")
+local Main = library:Window("Sword")
 
 -- Slider to adjust the walking speed
 Main:Slider("Speed Slider", 16, 500, 16, function(value)
@@ -992,7 +992,7 @@ Main:Slider("FOV Slider", 70, 120, 70, function(value)
 	camera.FieldOfView = value
 end)
 
---[[
+
 -- Global configuration
 getgenv().Config = {
     KEY_CONTROL = {
@@ -1001,10 +1001,10 @@ getgenv().Config = {
         FLY_DOWN = "LeftControl",
     },
     R6 = true,
-    STOP_FORCE = 10,
-    MOVE_FORCE = 10,
-    TURN_FORCE = 100,
-    MAX_SPEED = 100
+    STOP_FORCE = 50,
+    MOVE_FORCE = 50,
+    TURN_FORCE = 500,
+    MAX_SPEED = 500
 }
 
 -- Flight Mechanics
@@ -1135,10 +1135,10 @@ do
 end
 
 -- Flight toggle button
-Main:Toggle("Flight", false, function(EA)
-    toggleFlightMode()
+Main:Toggle("Flight", false, function()
+	toggleFlightMode()
 end)
-]]
+
 local SettingsSword = library:Window("Settings")
 
 SettingsSword:Label("Made By GamerGBG")
