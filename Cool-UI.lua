@@ -102,7 +102,7 @@ UiLib.Name = "UiLib"
 
 protect_gui(UiLib)
 
-local xOffset = 500
+local xOffset = 1000
 
 local uis = game:GetService("UserInputService")
 
@@ -146,7 +146,7 @@ function library:Window(name)
 	UiWindow.Active = true
 	Dragify(UiWindow)
 
-	xOffset = xOffset + 215
+	xOffset = xOffset + 235
 
 	local Header = Instance.new("Frame")
 	Header.Name = "Header"
@@ -334,7 +334,7 @@ function library:Window(name)
 		TextBox.Size = UDim2.new(0, 95, 0, 26)
 		TextBox.Font = Enum.Font.SourceSans
 		TextBox.PlaceholderColor3 = Color3.fromRGB(220, 221, 225)
-		TextBox.PlaceholderText = "..."
+		TextBox.PlaceholderText = " "
 		TextBox.Text = ""
 		TextBox.TextColor3 = Color3.fromRGB(245, 246, 250)
 		TextBox.TextSize = 16.000
@@ -968,4 +968,230 @@ function library:Window(name)
 	return functions
 end
 
+
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local camera = workspace.CurrentCamera
+
+
+local Main = library:Window("Main")
+
+-- Slider to adjust the walking speed
+Main:Slider("Speed Slider", 16, 500, 16, function(value)
+    humanoid.WalkSpeed = value
+end)
+
+-- Slider to adjust the jump power
+Main:Slider("Jump Slider", 50, 350, 50, function(value)
+    humanoid.JumpPower = value
+end)
+
+Main:Slider("FOV Slider", 70, 120, 70, function(value)
+	camera.FieldOfView = value
+end)
+
+--[[
+-- Global configuration
+getgenv().Config = {
+    KEY_CONTROL = {
+        TOGGLE_FLY = "E",
+        FLY_UP = "Space",
+        FLY_DOWN = "LeftControl",
+    },
+    R6 = true,
+    STOP_FORCE = 10,
+    MOVE_FORCE = 10,
+    TURN_FORCE = 100,
+    MAX_SPEED = 100
+}
+
+-- Flight Mechanics
+do
+    -- Check for configuration errors
+    for K, V in pairs(getgenv().Config) do
+        if K ~= "R6" and K ~= "KEY_CONTROL" then
+            getgenv().Config[K] = type(V) == "number" and math.abs(V) or ((K == "STOP_FORCE" or K == "MOVE_FORCE") and 2) or (K == "TURN_FORCE" and 5e3) or 100
+        end
+    end
+
+    if getgenv().FLY_LOADED then return end
+
+    if not game:IsLoaded() then
+        game.Loaded:Wait()
+    end
+
+    -- Services
+    local PLAYERS = game:GetService("Players")
+    local UIS = game:GetService("UserInputService")
+    local RSV = game:GetService("RunService")
+
+    -- Variables
+    local LOCAL_PLAYER = PLAYERS.LocalPlayer
+    local CAMERA = workspace.CurrentCamera
+    local FLY_TOGGLED = false
+    local X_SPEED = 0
+    local Y_SPEED = 0
+    local Z_SPEED = 0
+
+    -- Flight mechanics
+    local function updateFlight()
+        if FLY_TOGGLED then
+            -- Control X speed
+            if UIS:IsKeyDown(Enum.KeyCode.W) and not UIS:IsKeyDown(Enum.KeyCode.S) then
+                X_SPEED = math.min(X_SPEED + getgenv().Config.MOVE_FORCE, getgenv().Config.MAX_SPEED)
+            elseif UIS:IsKeyDown(Enum.KeyCode.S) and not UIS:IsKeyDown(Enum.KeyCode.W) then
+                X_SPEED = math.max(X_SPEED - getgenv().Config.MOVE_FORCE, -getgenv().Config.MAX_SPEED)
+            else
+                X_SPEED = X_SPEED - (X_SPEED > 0 and getgenv().Config.STOP_FORCE or -getgenv().Config.STOP_FORCE)
+                if math.abs(X_SPEED) < getgenv().Config.STOP_FORCE then X_SPEED = 0 end
+            end
+            
+            -- Control Y speed
+            if UIS:IsKeyDown(Enum.KeyCode[getgenv().Config.KEY_CONTROL.FLY_UP]) and not UIS:IsKeyDown(Enum.KeyCode[getgenv().Config.KEY_CONTROL.FLY_DOWN]) then
+                Y_SPEED = math.min(Y_SPEED + getgenv().Config.MOVE_FORCE, getgenv().Config.MAX_SPEED)
+            elseif UIS:IsKeyDown(Enum.KeyCode[getgenv().Config.KEY_CONTROL.FLY_DOWN]) then
+                Y_SPEED = math.max(Y_SPEED - getgenv().Config.MOVE_FORCE, -getgenv().Config.MAX_SPEED)
+            else
+                Y_SPEED = Y_SPEED - (Y_SPEED > 0 and getgenv().Config.STOP_FORCE or -getgenv().Config.STOP_FORCE)
+                if math.abs(Y_SPEED) < getgenv().Config.STOP_FORCE then Y_SPEED = 0 end
+            end
+            
+            -- Control Z speed
+            if UIS:IsKeyDown(Enum.KeyCode.A) and not UIS:IsKeyDown(Enum.KeyCode.D) then
+                Z_SPEED = math.max(Z_SPEED - getgenv().Config.MOVE_FORCE, -getgenv().Config.MAX_SPEED)
+            elseif UIS:IsKeyDown(Enum.KeyCode.D) then
+                Z_SPEED = math.min(Z_SPEED + getgenv().Config.MOVE_FORCE, getgenv().Config.MAX_SPEED)
+            else
+                Z_SPEED = Z_SPEED - (Z_SPEED > 0 and getgenv().Config.STOP_FORCE or -getgenv().Config.STOP_FORCE)
+                if math.abs(Z_SPEED) < getgenv().Config.STOP_FORCE then Z_SPEED = 0 end
+            end
+            
+            -- Update movement
+            local CHARACTER = LOCAL_PLAYER.Character
+            if CHARACTER then
+                local HUMANOID_ROOTPART = CHARACTER:FindFirstChild("HumanoidRootPart")
+                if HUMANOID_ROOTPART then
+                    local MOVE = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyVelocity")
+                    local TURN = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyGyro")
+                    
+                    if not MOVE then
+                        MOVE = Instance.new("BodyVelocity", HUMANOID_ROOTPART)
+                        MOVE.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+                        MOVE.P = 3000
+                    end
+                    if not TURN then
+                        TURN = Instance.new("BodyGyro", HUMANOID_ROOTPART)
+                        TURN.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+                    end
+                    
+                    TURN.P = getgenv().Config.TURN_FORCE
+                    TURN.CFrame = CAMERA.CFrame
+                    
+                    MOVE.Velocity = (CAMERA.CFrame.LookVector * X_SPEED) + (CAMERA.CFrame.RightVector * Z_SPEED) + (CAMERA.CFrame.UpVector * Y_SPEED)
+                    if MOVE.Velocity.Magnitude > getgenv().Config.MAX_SPEED then
+                        MOVE.Velocity = MOVE.Velocity.Unit * getgenv().Config.MAX_SPEED
+                    end
+                end
+            end
+        else
+            X_SPEED = 0
+            Y_SPEED = 0
+            Z_SPEED = 0
+        end
+    end
+
+    RSV.RenderStepped:Connect(updateFlight)
+
+    -- Toggle flight mode
+    function toggleFlightMode()
+        FLY_TOGGLED = not FLY_TOGGLED
+        local CHARACTER = LOCAL_PLAYER.Character
+        if CHARACTER then
+            local HUMANOID = CHARACTER:FindFirstChild("Humanoid")
+            local HUMANOID_ROOTPART = CHARACTER:FindFirstChild("HumanoidRootPart")
+            if HUMANOID and HUMANOID_ROOTPART then
+                if FLY_TOGGLED then
+                    HUMANOID.PlatformStand = getgenv().Config.R6
+                else
+                    HUMANOID.PlatformStand = false
+                    local MOVE = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyVelocity")
+                    local TURN = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyGyro")
+                    if MOVE then MOVE:Destroy() end
+                    if TURN then TURN:Destroy() end
+                end
+            end
+        end
+    end
+
+    UIS.InputBegan:Connect(function(Input)
+        if Input.KeyCode == Enum.KeyCode[getgenv().Config.KEY_CONTROL.TOGGLE_FLY] then
+            toggleFlightMode()
+        end
+    end)
+
+    getgenv().FLY_LOADED = true
+end
+
+-- Flight toggle button
+Main:Toggle("Flight", false, function(EA)
+    toggleFlightMode()
+end)
+]]
+local SettingsSword = library:Window("Settings")
+
+SettingsSword:Label("Made By GamerGBG")
+SettingsSword:Label("Press X To Hide")
+SettingsSword:Button("Destroy Gui", function()
+    library:Destroy()
+end)
+
+SettingsSword:Button("Join our Discord", function()
+	-- Create a ScreenGui and TextBox in the Player's PlayerGui
+	local player = game.Players.LocalPlayer
+	local screenGui = Instance.new("ScreenGui")
+	screenGui.Name = "DiscordGui"
+	screenGui.Parent = player.PlayerGui
+
+	local text = Instance.new("TextLabel")
+	text.Size = UDim2.new(0.7, 0, 0.1, 0)
+	text.Position = UDim2.new(0.1, 0, 0.4, -135)
+	text.Text = "Please Open the URL"
+	text.TextColor3 = Color3.fromRGB(255, 255, 255)
+	text.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Red color for visibility
+	text.TextScaled = true
+	text.Parent = screenGui
+
+	local textBox = Instance.new("TextBox")
+	textBox.Size = UDim2.new(0.7, 0, 0.1, 0)
+	textBox.Position = UDim2.new(0.1, 0, 0.4, 0)
+	textBox.Text = "https://discord.gg/xP3Z4rSfxv"
+	textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	textBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	textBox.TextScaled = true
+	textBox.TextWrapped = true
+	textBox.TextEditable = false  -- Prevent editing
+	textBox.ClearTextOnFocus = false  -- Prevent clearing text when focused
+	textBox.Parent = screenGui
+
+	local closeButton = Instance.new("TextButton")
+	closeButton.Size = UDim2.new(0.2, 0, 0.2, 0)
+	closeButton.Position = UDim2.new(0.8, 0, 0.3, 0)
+	closeButton.Text = "Close"
+	closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	closeButton.BackgroundColor3 = Color3.fromRGB(1, 0, 0)  -- Red color for visibility
+	closeButton.TextScaled = true
+	closeButton.Parent = screenGui
+
+	-- Function to remove the ScreenGui
+	local function onCloseButtonClicked()
+		screenGui:Destroy()  -- This will remove the GUI from the player's screen
+	end
+
+	-- Connect the function to the button's click event
+	closeButton.MouseButton1Click:Connect(onCloseButtonClicked)
+end)
+
+library:Keybind("X")
 return library
