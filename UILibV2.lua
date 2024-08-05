@@ -21,6 +21,25 @@ local player = players.LocalPlayer;
 local mouse = player:GetMouse();
 local run = game:service('RunService');
 local stepped = run.Stepped;
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Define a function to handle player death
+local function onPlayerDied()
+    -- Get the player's PlayerGui
+    local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+    
+    -- Find the SwordLib UI element
+    local swordLibUI = playerGui:FindFirstChild("SwordLib")
+    
+    -- Destroy the SwordLib UI element if it exists
+    if swordLibUI then
+        swordLibUI:Destroy()
+    end
+end
+
+humanoid.Died:Connect(onPlayerDied)
+
 function Dragify(obj)
 	spawn(function()
 		local minitial;
