@@ -1,9 +1,4 @@
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GamerGBG/Script/main/UILibV2.lua",true))()
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local camera = workspace.CurrentCamera
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/GamerGBG/Script/main/SwordLib.lua",true))()
 
 local Main = library:Window("Sword")
 
@@ -32,7 +27,7 @@ end)
 
 local Settings = {
 	
-	Speed = 5,
+	Speed = 1,
 	SprintSpeed = 35,
 	ToggleKey = Enum.KeyCode,
 	SprintKey = Enum.KeyCode.LeftControl,
