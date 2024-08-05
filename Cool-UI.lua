@@ -4,42 +4,12 @@ local sizes = {}
 local listOffset = {}
 local windows = {}
 local pastSliders = {}
-local dropdowns = {}
-local dropdownSizes = {}
 local destroyed
-
 local colorPickers = {}
 
-if game.CoreGui:FindFirstChild('UiLib') then
-	game.CoreGui:FindFirstChild('UiLib'):Destroy()
+if game.CoreGui:FindFirstChild('SwordLib') then
+	game.CoreGui:FindFirstChild('SwordLib'):Destroy()
 	destroyed = true
-end
-
--- Main function to find the DarknessPart in each CaveStage and the Trigger in TheEnd
-local function main()
-    A = false
-    -- Tween to DarknessPart in each CaveStage
-    for i = 1, 10 do
-        local caveStage = workspace.BoatStages.NormalStages["CaveStage" .. i]
-        local darknessPart = caveStage and caveStage:FindFirstChild("DarknessPart")
-        if darknessPart then
-            performTween(darknessPart.CFrame)
-            wait(2)
-        end
-    end
-
-    -- Tween to Trigger in TheEnd
-    local A = workspace.BoatStages.NormalStages.TheEnd.WaterfallEnd.Wall:FindFirstChild("Part")
-    if A then
-        performTween(A.CFrame)
-    end
-
-    -- Tween to Trigger in TheEnd
-    local goldenChest = workspace.BoatStages.NormalStages.TheEnd.GoldenChest:FindFirstChild("Trigger")
-    if goldenChest then
-        performTween(goldenChest.CFrame)
-        A = true
-    end
 end
 
 function Lerp(a, b, c)
@@ -90,17 +60,17 @@ local function protect_gui(obj)
 	if syn and syn.protect_gui then
 		syn.protect_gui(obj)
 		obj.Parent = game.CoreGui
-	elseif PROTOSMASHER_LOADED then
+	elseif LOADED then
 		obj.Parent = get_hidden_gui()
 	else
 		obj.Parent = game.CoreGui
 	end
 end
-local UiLib = Instance.new("ScreenGui")
+local SwordLib = Instance.new("ScreenGui")
 
-UiLib.Name = "UiLib"
+SwordLib.Name = "SwordLib"
 
-protect_gui(UiLib)
+protect_gui(SwordLib)
 
 local xOffset = 1000
 
@@ -109,13 +79,13 @@ local uis = game:GetService("UserInputService")
 local keybindConnection
 
 function library:Destroy()
-	UiLib:Destroy()
+	SwordLib:Destroy()
 	if keybindConnection then
 		keybindConnection:Disconnect()
 	end
 end
 function library:Hide()
-	UiLib.Enabled = not UiLib.Enabled
+	SwordLib.Enabled = not SwordLib.Enabled
 end	
 
 function library:Keybind(key)
@@ -123,7 +93,7 @@ function library:Keybind(key)
 
 	keybindConnection = uis.InputBegan:Connect(function(input, gp)
 		if not gp and input.KeyCode == Enum.KeyCode[key] then
-			UiLib.Enabled = not UiLib.Enabled
+			SwordLib.Enabled = not SwordLib.Enabled
 		end
 	end)
 end
@@ -137,7 +107,7 @@ function library:Window(name)
 	local UiWindow = Instance.new("Frame")
 
 	UiWindow.Name = "UiWindow"
-	UiWindow.Parent = UiLib
+	UiWindow.Parent = SwordLib
 	UiWindow.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 	UiWindow.BorderColor3 = Color3.fromRGB(50, 50, 50)
 	UiWindow.Position = UDim2.new(0, xOffset, 0, 0)
@@ -516,136 +486,7 @@ function library:Window(name)
 		end
 		return slider
 	end
-	function functions:Dropdown(text, buttons, callback, selective)
-		local text = text or "Dropdown"
-		local buttons = buttons or {}
-		local callback = callback or function() end
 
-		local Dropdown = Instance.new("TextButton")
-		local DownSign = Instance.new("TextLabel")
-		local DropdownFrame = Instance.new("ScrollingFrame")
-
-		sizes[winCount] = sizes[winCount] + 32
-		Window.Size = UDim2.new(0, 207, 0, sizes[winCount] + 10)
-
-		listOffset[winCount] = listOffset[winCount] + 32
-
-		Dropdown.Name = "Dropdown"
-		Dropdown.Parent = Window
-		Dropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-		Dropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		Dropdown.Position = UDim2.new(0, 12, 0, listOffset[winCount])
-		Dropdown.Size = UDim2.new(0, 182, 0, 26)
-		Dropdown.Selected = true
-		Dropdown.Font = Enum.Font.SourceSans
-		Dropdown.Text = tostring(text)
-		Dropdown.TextColor3 = Color3.fromRGB(245, 246, 250)
-		Dropdown.TextSize = 16.000
-		Dropdown.TextStrokeTransparency = 123.000
-		Dropdown.TextWrapped = true
-		Dropdown.ZIndex = 3 + zindex
-		Dropdown.MouseButton1Up:Connect(function()
-			for i, v in pairs(dropdowns) do
-				if v ~= DropdownFrame then
-					v.Visible = false
-					DownSign.Rotation = 0
-				end
-			end
-			if DropdownFrame.Visible then
-				DownSign.Rotation = 0
-			else
-				DownSign.Rotation = 180
-			end
-			DropdownFrame.Visible = not DropdownFrame.Visible
-		end)
-
-		DownSign.Name = "DownSign"
-		DownSign.Parent = Dropdown
-		DownSign.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		DownSign.BackgroundTransparency = 1.000
-		DownSign.Position = UDim2.new(0, 155, 0, 2)
-		DownSign.Size = UDim2.new(0, 27, 0, 22)
-		DownSign.Font = Enum.Font.SourceSans
-		DownSign.Text = ""
-		DownSign.TextColor3 = Color3.fromRGB(255, 255, 255)
-		DownSign.TextSize = 0.000
-		DownSign.ZIndex = 4 + zindex
-		DownSign.TextYAlignment = Enum.TextYAlignment.Bottom
-
-		DropdownFrame.Name = "DropdownFrame"
-		DropdownFrame.Parent = Dropdown
-		DropdownFrame.Active = true
-		DropdownFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-		DropdownFrame.BorderColor3 = Color3.fromRGB(50, 50, 50)
-		DropdownFrame.Position = UDim2.new(0, 0, 0, 28)
-		DropdownFrame.Size = UDim2.new(0, 182, 0, 0)
-		DropdownFrame.Visible = false
-		DropdownFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-		DropdownFrame.ScrollBarThickness = 4
-		DropdownFrame.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
-		DropdownFrame.ZIndex = 5 + zindex
-		DropdownFrame.ScrollingDirection = Enum.ScrollingDirection.Y
-		DropdownFrame.ScrollBarImageColor3 = Color3.fromRGB(220, 221, 225)
-		table.insert(dropdowns, DropdownFrame)
-		local dropFunctions = {}
-		local canvasSize = 0
-		function dropFunctions:Button(name)
-			local name = name or ""
-			local Button_2 = Instance.new("TextButton")
-			Button_2.Name = "Button"
-			Button_2.Parent = DropdownFrame
-			Button_2.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-			Button_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-			Button_2.Position = UDim2.new(0, 6, 0, canvasSize + 1)
-			Button_2.Size = UDim2.new(0, 170, 0, 26)
-			Button_2.Selected = true
-			Button_2.Font = Enum.Font.SourceSans
-			Button_2.TextColor3 = Color3.fromRGB(245, 246, 250)
-			Button_2.TextSize = 16.000
-			Button_2.TextStrokeTransparency = 123.000
-			Button_2.ZIndex = 6 + zindex
-			Button_2.Text = name
-			Button_2.TextWrapped = true
-			canvasSize = canvasSize + 27
-			DropdownFrame.CanvasSize = UDim2.new(0, 182, 0, canvasSize + 1)
-			if #DropdownFrame:GetChildren() < 8 then
-				DropdownFrame.Size = UDim2.new(0, 182, 0, DropdownFrame.Size.Y.Offset + 27)
-			end
-			Button_2.MouseButton1Up:Connect(function()
-				callback(name)
-				DropdownFrame.Visible = false
-				if selective then
-					Dropdown.Text = name
-				end
-			end)
-		end
-		function dropFunctions:Remove(name)
-			local foundIt
-			for i, v in pairs(DropdownFrame:GetChildren()) do
-				if foundIt then
-					canvasSize = canvasSize - 27
-					v.Position = UDim2.new(0, 6, 0, v.Position.Y.Offset - 27)
-					DropdownFrame.CanvasSize = UDim2.new(0, 182, 0, canvasSize + 1)
-				end
-				if v.Text == name then
-					foundIt = true
-					v:Destroy()
-					if #DropdownFrame:GetChildren() < 8 then
-						DropdownFrame.Size = UDim2.new(0, 182, 0, DropdownFrame.Size.Y.Offset - 27)
-					end
-				end
-			end
-			if not foundIt then
-				warn("The button you tried to remove didn't exist!")
-			end
-		end
-
-		for i,v in pairs(buttons) do
-			dropFunctions:Button(v)
-		end
-
-		return dropFunctions
-	end
 	function functions:ColorPicker(name, default, callback)
 		local callback = callback or function() end
 
@@ -966,229 +807,6 @@ function library:Window(name)
 	end
 
 	return functions
-end
-
-
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local camera = workspace.CurrentCamera
-
-
-local Main = library:Window("Sword")
-
--- Slider to adjust the walking speed
-Main:Slider("Speed Slider", 16, 500, 16, function(value)
-    humanoid.WalkSpeed = value
-end)
-
--- Slider to adjust the jump power
-Main:Slider("Jump Slider", 50, 350, 50, function(value)
-    humanoid.JumpPower = value
-end)
-
-Main:Slider("FOV Slider", 70, 120, 70, function(value)
-	camera.FieldOfView = value
-end)
-
-Main:Button("Inf Jump", function()
-	game:GetService('UserInputService').InputBegan:Connect(function(UserInput) local Player = game:GetService('Players').LocalPlayer; _G.JumpHeight = humanoid.JumpPower; local UIS = game:GetService('UserInputService'); local function Action(Object, Function) if Object ~= nil then Function(Object) end end; if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then Action(Player.Character.Humanoid, function(self) if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then Action(self.Parent.HumanoidRootPart, function(rootPart) rootPart.Velocity = Vector3.new(0, _G.JumpHeight, 0) end) end end) end end)
-end)
-
--- Flight toggle button
-Main:Toggle("Flight", false, function()
-	toggleFlightMode()
-end)
-
-local SettingsSword = library:Window("Settings")
-
-SettingsSword:Label("Made By GamerGBG")
-SettingsSword:Label("Press X To Hide")
-SettingsSword:Button("Destroy Gui", function()
-    library:Destroy()
-end)
-
-SettingsSword:Button("Join our Discord", function()
-	-- Create a ScreenGui and TextBox in the Player's PlayerGui
-	local player = game.Players.LocalPlayer
-	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "DiscordGui"
-	screenGui.Parent = player.PlayerGui
-
-	local text = Instance.new("TextLabel")
-	text.Size = UDim2.new(0.7, 0, 0.1, 0)
-	text.Position = UDim2.new(0.1, 0, 0.4, -135)
-	text.Text = "Please Open the URL"
-	text.TextColor3 = Color3.fromRGB(255, 255, 255)
-	text.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Red color for visibility
-	text.TextScaled = true
-	text.Parent = screenGui
-
-	local textBox = Instance.new("TextBox")
-	textBox.Size = UDim2.new(0.7, 0, 0.1, 0)
-	textBox.Position = UDim2.new(0.1, 0, 0.4, 0)
-	textBox.Text = "https://discord.gg/xP3Z4rSfxv"
-	textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-	textBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-	textBox.TextScaled = true
-	textBox.TextWrapped = true
-	textBox.TextEditable = false  -- Prevent editing
-	textBox.ClearTextOnFocus = false  -- Prevent clearing text when focused
-	textBox.Parent = screenGui
-
-	local closeButton = Instance.new("TextButton")
-	closeButton.Size = UDim2.new(0.2, 0, 0.2, 0)
-	closeButton.Position = UDim2.new(0.8, 0, 0.3, 0)
-	closeButton.Text = "Close"
-	closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-	closeButton.BackgroundColor3 = Color3.fromRGB(1, 0, 0)  -- Red color for visibility
-	closeButton.TextScaled = true
-	closeButton.Parent = screenGui
-
-	-- Function to remove the ScreenGui
-	local function onCloseButtonClicked()
-		screenGui:Destroy()  -- This will remove the GUI from the player's screen
-	end
-
-	-- Connect the function to the button's click event
-	closeButton.MouseButton1Click:Connect(onCloseButtonClicked)
-end)
-
-library:Keybind("X")
-
--- Global configuration
-getgenv().Config = {
-    KEY_CONTROL = {
-        TOGGLE_FLY = "E",
-        FLY_UP = "Space",
-        FLY_DOWN = "LeftControl",
-    },
-    R6 = true,
-    STOP_FORCE = 50,
-    MOVE_FORCE = 50,
-    TURN_FORCE = 100,
-    MAX_SPEED = 100
-}
-
--- Flight Mechanics
-do
-    -- Check for configuration errors
-    for K, V in pairs(getgenv().Config) do
-        if K ~= "R6" and K ~= "KEY_CONTROL" then
-            getgenv().Config[K] = type(V) == "number" and math.abs(V) or ((K == "STOP_FORCE" or K == "MOVE_FORCE") and 2) or (K == "TURN_FORCE" and 5e3) or 100
-        end
-    end
-
-    if getgenv().FLY_LOADED then return end
-
-    if not game:IsLoaded() then
-        game.Loaded:Wait()
-    end
-
-    -- Services
-    local PLAYERS = game:GetService("Players")
-    local UIS = game:GetService("UserInputService")
-    local RSV = game:GetService("RunService")
-
-    -- Variables
-    local LOCAL_PLAYER = PLAYERS.LocalPlayer
-    local CAMERA = workspace.CurrentCamera
-    local FLY_TOGGLED = false
-    local X_SPEED = 0
-    local Y_SPEED = 0
-    local Z_SPEED = 0
-
-    -- Flight mechanics
-    local function updateFlight()
-        if FLY_TOGGLED then
-            -- Control X speed
-            if UIS:IsKeyDown(Enum.KeyCode.W) and not UIS:IsKeyDown(Enum.KeyCode.S) then
-                X_SPEED = math.min(X_SPEED + getgenv().Config.MOVE_FORCE, getgenv().Config.MAX_SPEED)
-            elseif UIS:IsKeyDown(Enum.KeyCode.S) and not UIS:IsKeyDown(Enum.KeyCode.W) then
-                X_SPEED = math.max(X_SPEED - getgenv().Config.MOVE_FORCE, -getgenv().Config.MAX_SPEED)
-            else
-                X_SPEED = X_SPEED - (X_SPEED > 0 and getgenv().Config.STOP_FORCE or -getgenv().Config.STOP_FORCE)
-                if math.abs(X_SPEED) < getgenv().Config.STOP_FORCE then X_SPEED = 0 end
-            end
-            
-            -- Control Y speed
-            if UIS:IsKeyDown(Enum.KeyCode[getgenv().Config.KEY_CONTROL.FLY_UP]) and not UIS:IsKeyDown(Enum.KeyCode[getgenv().Config.KEY_CONTROL.FLY_DOWN]) then
-                Y_SPEED = math.min(Y_SPEED + getgenv().Config.MOVE_FORCE, getgenv().Config.MAX_SPEED)
-            elseif UIS:IsKeyDown(Enum.KeyCode[getgenv().Config.KEY_CONTROL.FLY_DOWN]) then
-                Y_SPEED = math.max(Y_SPEED - getgenv().Config.MOVE_FORCE, -getgenv().Config.MAX_SPEED)
-            else
-                Y_SPEED = Y_SPEED - (Y_SPEED > 0 and getgenv().Config.STOP_FORCE or -getgenv().Config.STOP_FORCE)
-                if math.abs(Y_SPEED) < getgenv().Config.STOP_FORCE then Y_SPEED = 0 end
-            end
-            
-            -- Control Z speed
-            if UIS:IsKeyDown(Enum.KeyCode.A) and not UIS:IsKeyDown(Enum.KeyCode.D) then
-                Z_SPEED = math.max(Z_SPEED - getgenv().Config.MOVE_FORCE, -getgenv().Config.MAX_SPEED)
-            elseif UIS:IsKeyDown(Enum.KeyCode.D) then
-                Z_SPEED = math.min(Z_SPEED + getgenv().Config.MOVE_FORCE, getgenv().Config.MAX_SPEED)
-            else
-                Z_SPEED = Z_SPEED - (Z_SPEED > 0 and getgenv().Config.STOP_FORCE or -getgenv().Config.STOP_FORCE)
-                if math.abs(Z_SPEED) < getgenv().Config.STOP_FORCE then Z_SPEED = 0 end
-            end
-            
-            -- Update movement
-            local CHARACTER = LOCAL_PLAYER.Character
-            if CHARACTER then
-                local HUMANOID_ROOTPART = CHARACTER:FindFirstChild("HumanoidRootPart")
-                if HUMANOID_ROOTPART then
-                    local MOVE = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyVelocity")
-                    local TURN = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyGyro")
-                    
-                    if not MOVE then
-                        MOVE = Instance.new("BodyVelocity", HUMANOID_ROOTPART)
-                        MOVE.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-                        MOVE.P = 3000
-                    end
-                    if not TURN then
-                        TURN = Instance.new("BodyGyro", HUMANOID_ROOTPART)
-                        TURN.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
-                    end
-                    
-                    TURN.P = getgenv().Config.TURN_FORCE
-                    TURN.CFrame = CAMERA.CFrame
-                    
-                    MOVE.Velocity = (CAMERA.CFrame.LookVector * X_SPEED) + (CAMERA.CFrame.RightVector * Z_SPEED) + (CAMERA.CFrame.UpVector * Y_SPEED)
-                    if MOVE.Velocity.Magnitude > getgenv().Config.MAX_SPEED then
-                        MOVE.Velocity = MOVE.Velocity.Unit * getgenv().Config.MAX_SPEED
-                    end
-                end
-            end
-        else
-            X_SPEED = 0
-            Y_SPEED = 0
-            Z_SPEED = 0
-        end
-    end
-
-    RSV.RenderStepped:Connect(updateFlight)
-
-    -- Toggle flight mode
-    function toggleFlightMode()
-        FLY_TOGGLED = not FLY_TOGGLED
-        local CHARACTER = LOCAL_PLAYER.Character
-        if CHARACTER then
-            local HUMANOID = CHARACTER:FindFirstChild("Humanoid")
-            local HUMANOID_ROOTPART = CHARACTER:FindFirstChild("HumanoidRootPart")
-            if HUMANOID and HUMANOID_ROOTPART then
-                if FLY_TOGGLED then
-                    HUMANOID.PlatformStand = getgenv().Config.R6
-                else
-                    HUMANOID.PlatformStand = false
-                    local MOVE = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyVelocity")
-                    local TURN = HUMANOID_ROOTPART:FindFirstChildOfClass("BodyGyro")
-                    if MOVE then MOVE:Destroy() end
-                    if TURN then TURN:Destroy() end
-                end
-            end
-        end
-    end
-    getgenv().FLY_LOADED = true
 end
 
 return library
